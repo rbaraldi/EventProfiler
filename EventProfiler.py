@@ -1,5 +1,3 @@
-__author__ = 'rbaraldi'
-
 import pandas as pd
 import numpy as np
 import math
@@ -31,12 +29,11 @@ def find_events(ls_symbols, d_data, f_priceDrop):
 
     for s_sym in ls_symbols:
         for i in range(1, len(ldt_timestamps)):
-            # Calculating the returns for this timestamp
+            # Timestamp
             f_symprice_today = df_close[s_sym].ix[ldt_timestamps[i]]
             f_symprice_yest = df_close[s_sym].ix[ldt_timestamps[i - 1]]
-
             # Event is found if on 2 consecutive closes the price went from
-            # greater than or equal to 5.00 to less than 5.00
+            # greater than or equal to f_priceDrop to less than f_priceDrop
             if f_symprice_yest >= f_priceDrop and f_symprice_today < f_priceDrop:
                 df_events[s_sym].ix[ldt_timestamps[i]] = 1
 
@@ -80,6 +77,9 @@ def main():
 
     ls_symbols_2008 = dataObj.get_symbols_from_list('sp5002008')
     ls_symbols_2008.append('SPY')
+
+    #lf_priceDrop2008 = [5.0, 6.0, 7.0, 8.0, 9.0, 10.0]
+    #lf_priceDrop2012 = [5.0, 6.0, 7.0, 8.0, 9.0, 10.0]
 
     lf_priceDrop2008 = [7.0, 8.0, 10.0]
     lf_priceDrop2012 = [6.0, 7.0, 9.0, 10.0]
